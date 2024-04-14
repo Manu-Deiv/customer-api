@@ -3,17 +3,12 @@
  * @module RefreshTokenUserUseCaseTests
  */
 
-import { RefreshTokenDTO } from '../../../../domain/dtos/auth/RefreshToken';
 import { AuthErrorMessageEnum } from '../../../../domain/enums/auth/ErrorMessage';
-import { left, right } from '../../../../domain/utils/either/either';
+import { left } from '../../../../domain/utils/either/either';
 import { RequiredParametersError } from '../../../../domain/utils/errors/RequiredParametersError';
 import { AbstractGenerateRefreshTokenProvider } from '../../../providers/GenerateRefreshToken';
 import { AbstractTokenManagerProvider } from '../../../providers/TokenMagerProvider';
 import { AbstractRefreshTokenRepository } from '../../../repositories/RefreshToken';
-import {
-  AbstractRefreshTokenUseCase,
-  RefreshTokenResponse,
-} from './AbstractRefreshToken';
 import { RefreshTokenUseCase } from './RefreshToken';
 
 /**
@@ -22,15 +17,15 @@ import { RefreshTokenUseCase } from './RefreshToken';
  * @name RefreshTokenUserUseCaseTests
  */
 describe('RefreshTokenUserUseCase', () => {
-  let refreshTokenUserUseCase: RefreshTokenUseCase
-  let generateRefreshTokenProvider: AbstractGenerateRefreshTokenProvider
-  let refreshTokenRepository: AbstractRefreshTokenRepository
-  let tokenManager: AbstractTokenManagerProvider
-  const mockRefreshTokenId = { refreshTokenId: 'mockRefreshTokenId' }
+  let refreshTokenUserUseCase: RefreshTokenUseCase;
+  let generateRefreshTokenProvider: AbstractGenerateRefreshTokenProvider;
+  let refreshTokenRepository: AbstractRefreshTokenRepository;
+  let tokenManager: AbstractTokenManagerProvider;
+  const mockRefreshTokenId = { refreshTokenId: 'mockRefreshTokenId' };
   const mockRefreshToken = {
-    user_id: 'mockUserId',
+    customer_id: 'mockUserId',
     expires_in: 'mockExpiresIn',
-  }
+  };
   const tokenInvalidOrExpired = left(
     new RequiredParametersError(AuthErrorMessageEnum.TokenInvalidOrExpired),
   );
@@ -44,22 +39,22 @@ describe('RefreshTokenUserUseCase', () => {
     refreshTokenRepository = {
       create: jest.fn(),
       findById: jest.fn(),
-      findByUserId: jest.fn(),
+      findByCustomerId: jest.fn(),
       delete: jest.fn(),
-    }
+    };
     generateRefreshTokenProvider = {
       generateToken: jest.fn(),
-    }
+    };
     tokenManager = {
       validateToken: jest.fn(),
       validateTokenAge: jest.fn(),
-    }
+    };
     refreshTokenUserUseCase = new RefreshTokenUseCase(
       generateRefreshTokenProvider,
       refreshTokenRepository,
       tokenManager,
-    )
-  })
+    );
+  });
 
   /**
    * Clean up after each test case.
@@ -67,8 +62,8 @@ describe('RefreshTokenUserUseCase', () => {
    * @name afterEach
    */
   afterEach(() => {
-    jest.clearAllMocks()
-  })
+    jest.clearAllMocks();
+  });
 
   /**
    * Test suite for the execute method of RefreshTokenUserUseCase.
@@ -82,15 +77,15 @@ describe('RefreshTokenUserUseCase', () => {
      * @name shouldReturnErrorWhenRefreshTokenIsInvalid
      */
     it('should return an error response when the refresh token is invalid', async () => {
-      refreshTokenRepository.findById = jest.fn().mockResolvedValueOnce(null)
+      refreshTokenRepository.findById = jest.fn().mockResolvedValueOnce(null);
 
-      const result = await refreshTokenUserUseCase.execute(mockRefreshTokenId)
+      const result = await refreshTokenUserUseCase.execute(mockRefreshTokenId);
 
-      expect(result.value).toEqual(tokenInvalidOrExpired.value)
+      expect(result.value).toEqual(tokenInvalidOrExpired.value);
       expect(refreshTokenRepository.findById).toHaveBeenCalledWith(
         mockRefreshTokenId.refreshTokenId,
-      )
-    })
+      );
+    });
 
     /**
      * Test case to verify a new refresh token and token are returned when the refresh token has expired.
@@ -100,23 +95,23 @@ describe('RefreshTokenUserUseCase', () => {
     it('should return a new refresh token and token when the refresh token has expired', async () => {
       refreshTokenRepository.findById = jest
         .fn()
-        .mockResolvedValueOnce(mockRefreshToken)
-      tokenManager.validateTokenAge = jest.fn().mockReturnValueOnce(true)
+        .mockResolvedValueOnce(mockRefreshToken);
+      tokenManager.validateTokenAge = jest.fn().mockReturnValueOnce(true);
       generateRefreshTokenProvider.generateToken = jest
         .fn()
-        .mockResolvedValueOnce('newMockRefreshToken')
+        .mockResolvedValueOnce('newMockRefreshToken');
 
-      const result = await refreshTokenUserUseCase.execute(mockRefreshTokenId)
+      const result = await refreshTokenUserUseCase.execute(mockRefreshTokenId);
 
-      expect(result.value).toHaveProperty('token')
-      expect(result.value).toHaveProperty('refreshToken')
+      expect(result.value).toHaveProperty('token');
+      expect(result.value).toHaveProperty('refreshToken');
       expect(refreshTokenRepository.delete).toHaveBeenCalledWith(
-        mockRefreshToken.user_id,
-      )
+        mockRefreshToken.customer_id,
+      );
       expect(generateRefreshTokenProvider.generateToken).toHaveBeenCalledWith(
-        mockRefreshToken.user_id,
-      )
-    })
+        mockRefreshToken.customer_id,
+      );
+    });
 
     /**
      * Test case to verify only a token is returned when the refresh token is valid and has not expired.
@@ -126,16 +121,16 @@ describe('RefreshTokenUserUseCase', () => {
     it('should return a token when the refresh token is valid and has not expired', async () => {
       refreshTokenRepository.findById = jest
         .fn()
-        .mockResolvedValueOnce(mockRefreshToken)
-      tokenManager.validateTokenAge = jest.fn().mockReturnValueOnce(false)
+        .mockResolvedValueOnce(mockRefreshToken);
+      tokenManager.validateTokenAge = jest.fn().mockReturnValueOnce(false);
       generateRefreshTokenProvider.generateToken = jest
         .fn()
-        .mockResolvedValueOnce('mockGeneratedToken')
+        .mockResolvedValueOnce('mockGeneratedToken');
 
-      const result = await refreshTokenUserUseCase.execute(mockRefreshTokenId)
+      const result = await refreshTokenUserUseCase.execute(mockRefreshTokenId);
 
-      expect(result.value).toEqual({ token: 'mockGeneratedToken' })
-      expect(refreshTokenRepository.delete).not.toHaveBeenCalled()
-    })
-  })
-})
+      expect(result.value).toEqual({ token: 'mockGeneratedToken' });
+      expect(refreshTokenRepository.delete).not.toHaveBeenCalled();
+    });
+  });
+});

@@ -7,13 +7,13 @@ import { RefreshTokenDTO } from '../../domain/dtos/auth/RefreshToken';
  */
 export abstract class AbstractRefreshTokenRepository {
   /**
-   * Creates a new refresh token for the specified user.
+   * Creates a new refresh token for the specified customer.
    *
    * @async
-   * @param {string} user_id - The ID of the user.
+   * @param {string} customer_id - The ID of the customer.
    * @returns {Promise<RefreshTokenDTO>} The created refresh token.
    */
-  abstract create(user_id: string): Promise<RefreshTokenDTO>;
+  abstract create(customer_id: string): Promise<RefreshTokenDTO>;
 
   /**
    * Finds a refresh token by its identifier.
@@ -25,20 +25,22 @@ export abstract class AbstractRefreshTokenRepository {
   abstract findById(refreshToken: string): Promise<RefreshTokenDTO | unknown>;
 
   /**
-   * Finds a refresh token by the user's ID.
+   * Finds a refresh token by the customer's ID.
    *
    * @async
-   * @param {string} user_id - The ID of the user.
+   * @param {string} customer_id - The ID of the customer.
    * @returns {Promise<RefreshTokenDTO | unknown>} The found refresh token, or undefined if not found.
    */
-  abstract findByUserId(user_id: string): Promise<RefreshTokenDTO | unknown>;
+  abstract findByCustomerId(
+    customer_id: string,
+  ): Promise<RefreshTokenDTO | unknown>;
 
   /**
-   * Deletes a refresh token associated with the specified user.
+   * Deletes a refresh token associated with the specified customer.
    *
    * @async
-   * @param {string} user_id - The ID of the user.
+   * @param {string} customer_id - The ID of the customer.
    * @returns {Promise<void>} A promise that resolves when the refresh token is deleted.
    */
-  abstract delete(user_id: string): Promise<void>;
+  abstract delete(customer_id: string): Promise<void>;
 }

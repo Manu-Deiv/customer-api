@@ -11,5 +11,5 @@ export abstract class AbstractGenerateRefreshTokenProvider {
    * @param {string} token - The token used as a basis for generating the refresh token.
    * @returns {Promise<string>} The generated refresh token.
    */
-  abstract generateToken(token: string): Promise<string>
+  abstract generateToken(token: string): Promise<string>;
 }

@@ -12,14 +12,14 @@ import {
 } from './AbstractRefreshToken';
 
 /**
- * Use case for refreshing a user's authentication token.
+ * Use case for refreshing a customer's authentication token.
  *
  * @class
  * @implements {AbstractRefreshTokenUseCase}
  */
 export class RefreshTokenUseCase implements AbstractRefreshTokenUseCase {
   /**
-   * Creates an instance of RefreshTokenUserUseCase.
+   * Creates an instance of RefreshTokencustomerUseCase.
    *
    * @constructor
    * @param {AbstractGenerateRefreshTokenProvider} generateRefreshTokenProvider - The refresh token generator provider.
@@ -33,10 +33,10 @@ export class RefreshTokenUseCase implements AbstractRefreshTokenUseCase {
   ) {}
 
   /**
-   * Executes the refresh token user use case.
+   * Executes the refresh token customer use case.
    *
    * @async
-   * @param {IRefreshTokenUserDTO} refreshTokenId - The refresh token information.
+   * @param {IRefreshTokencustomerDTO} refreshTokenId - The refresh token information.
    * @returns {Promise<RefreshToken>} The response data.
    */
   async execute({
@@ -56,13 +56,13 @@ export class RefreshTokenUseCase implements AbstractRefreshTokenUseCase {
       refreshToken.expires_in,
     );
     const token = await this.generateRefreshTokenProvider.generateToken(
-      refreshToken.user_id,
+      refreshToken.customer_id,
     );
 
     if (refreshTokenExpired) {
-      await this.refreshTokenRepository.delete(refreshToken.user_id);
+      await this.refreshTokenRepository.delete(refreshToken.customer_id);
       const newRefreshToken = await this.refreshTokenRepository.create(
-        refreshToken.user_id,
+        refreshToken.customer_id,
       );
       return right({ refreshToken: newRefreshToken, token });
     }
