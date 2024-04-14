@@ -31,7 +31,12 @@ export class RefreshTokenDTO {
    * @param {string} user_id - The user ID associated with the refresh token.
    * @param {Date} createdAt - The creation timestamp of the refresh token.
    */
-  constructor(id: string, expires_in: number, user_id: string, createdAt: Date) {
+  constructor(
+    id: string,
+    expires_in: number,
+    user_id: string,
+    createdAt: Date,
+  ) {
     this.id = id;
     this.expires_in = expires_in;
     this.user_id = user_id;

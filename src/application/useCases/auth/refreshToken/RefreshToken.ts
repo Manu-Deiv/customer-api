@@ -1,0 +1,71 @@
+import { RefreshTokenDTO } from '../../../../domain/dtos/auth/RefreshToken';
+import { AuthErrorMessageEnum } from '../../../../domain/enums/auth/ErrorMessage';
+import { left, right } from '../../../../domain/utils/either/either';
+import { RequiredParametersError } from '../../../../domain/utils/errors/RequiredParametersError';
+import { AbstractGenerateRefreshTokenProvider } from '../../../providers/GenerateRefreshToken';
+import { AbstractTokenManagerProvider } from '../../../providers/TokenMagerProvider';
+import { AbstractRefreshTokenRepository } from '../../../repositories/RefreshToken';
+import {
+  AbstractRefreshTokenUseCase,
+  RefreshTokenResponse,
+} from './AbstractRefreshToken';
+
+/**
+ * Use case for refreshing a user's authentication token.
+ *
+ * @class
+ * @implements {AbstractRefreshTokenUseCase}
+ */
+export class RefreshTokenUserUseCase implements AbstractRefreshTokenUseCase {
+  /**
+   * Creates an instance of RefreshTokenUserUseCase.
+   *
+   * @constructor
+   * @param {AbstractGenerateRefreshTokenProvider} generateRefreshTokenProvider - The refresh token generator provider.
+   * @param {AbstractRefreshTokenRepository} refreshTokenRepository - The repository for refresh tokens.
+   * @param {AbstractTokenManagerProvider} tokenManager - The token manager provider.
+   */
+  constructor(
+    private generateRefreshTokenProvider: AbstractGenerateRefreshTokenProvider,
+    private refreshTokenRepository: AbstractRefreshTokenRepository,
+    private tokenManager: AbstractTokenManagerProvider,
+  ) {}
+
+  /**
+   * Executes the refresh token user use case.
+   *
+   * @async
+   * @param {IRefreshTokenUserDTO} refreshTokenId - The refresh token information.
+   * @returns {Promise<RefreshToken>} The response data.
+   */
+  async execute({
+    id: refreshTokenId,
+  }: RefreshTokenDTO): Promise<RefreshTokenResponse> {
+    const refreshToken = (await this.refreshTokenRepository.findById(
+      refreshTokenId,
+    )) as RefreshTokenDTO | null;
+
+    if (!refreshToken) {
+      return left(
+        new RequiredParametersError(AuthErrorMessageEnum.TokenInvalidOrExpired),
+      );
+    }
+
+    const refreshTokenExpired = this.tokenManager.validateTokenAge(
+      refreshToken.expires_in,
+    );
+    const token = await this.generateRefreshTokenProvider.generateToken(
+      refreshToken.user_id,
+    );
+
+    if (refreshTokenExpired) {
+      await this.refreshTokenRepository.delete(refreshToken.user_id);
+      const newRefreshToken = await this.refreshTokenRepository.create(
+        refreshToken.user_id,
+      );
+      return right({ refreshToken: newRefreshToken, token });
+    }
+
+    return right({ token });
+  }
+}

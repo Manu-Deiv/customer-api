@@ -1,11 +1,16 @@
-import { RefreshToken } from '../../../../domain/entities/RefreshToken'
-import { RefreshTokenDTO } from '../../../../domain/dtos/auth/RefreshToken'
+import { RefreshTokenDTO } from '../../../../domain/dtos/auth/RefreshToken';
+import { Either } from '../../../../domain/utils/either/either';
+import { RequiredParametersError } from '../../../../domain/utils/errors/RequiredParametersError';
 
+export type RefreshTokenResponse = Either<
+  RequiredParametersError,
+  { refreshToken?: RefreshTokenDTO; token: string }
+>;
 
 /**
- * Interface for the use case of refreshing a user's authentication token.
+ * Abstract class for the use case of refreshing a user's authentication token.
  *
- * This interface defines the contract for a use case responsible for refreshing
+ * This abstract class defines the contract for a use case responsible for refreshing
  * a user's authentication token using a provided refresh token identifier.
  *
  * @class
@@ -22,5 +27,7 @@ export abstract class AbstractRefreshTokenUseCase {
    * This method is responsible for handling the logic of refreshing a user's
    * authentication token based on the provided refresh token identifier.
    */
-  abstract execute(refreshToken: RefreshTokenDTO): Promise<RefreshToken>
+  abstract execute(
+    refreshToken: RefreshTokenDTO,
+  ): Promise<RefreshTokenResponse>;
 }
