@@ -1,9 +1,9 @@
-# Clean Arch Nest Project
+# Customer API
 
 
 ## Description
 
-The Clean Arch Nest Project is a template project built on the Nest.js framework, implementing clean architecture principles. Its primary purpose is to provide developers with a structured and efficient approach to building modern web applications.
+The Customer API is an isolated API designed to seamlessly communicate with other APIs via Kafka messaging. Built on the Nest.js framework and incorporating clean architecture principles, its primary purpose is to serve as a reliable interface for managing customer data and facilitating smooth interaction with various other APIs within the ecosystem.
 
 ## Table of Contents
 
