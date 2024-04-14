@@ -1,4 +1,5 @@
 import { RefreshTokenDTO } from '../../../../domain/dtos/auth/RefreshToken';
+import { RefreshTokenCustomerDTO } from '../../../../domain/dtos/auth/RefreshTokenCustomer';
 import { AuthErrorMessageEnum } from '../../../../domain/enums/auth/ErrorMessage';
 import { left, right } from '../../../../domain/utils/either/either';
 import { RequiredParametersError } from '../../../../domain/utils/errors/RequiredParametersError';
@@ -16,7 +17,7 @@ import {
  * @class
  * @implements {AbstractRefreshTokenUseCase}
  */
-export class RefreshTokenUserUseCase implements AbstractRefreshTokenUseCase {
+export class RefreshTokenUseCase implements AbstractRefreshTokenUseCase {
   /**
    * Creates an instance of RefreshTokenUserUseCase.
    *
@@ -39,8 +40,8 @@ export class RefreshTokenUserUseCase implements AbstractRefreshTokenUseCase {
    * @returns {Promise<RefreshToken>} The response data.
    */
   async execute({
-    id: refreshTokenId,
-  }: RefreshTokenDTO): Promise<RefreshTokenResponse> {
+    refreshTokenId,
+  }: RefreshTokenCustomerDTO): Promise<RefreshTokenResponse> {
     const refreshToken = (await this.refreshTokenRepository.findById(
       refreshTokenId,
     )) as RefreshTokenDTO | null;

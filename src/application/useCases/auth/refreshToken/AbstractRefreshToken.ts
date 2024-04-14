@@ -1,4 +1,5 @@
 import { RefreshTokenDTO } from '../../../../domain/dtos/auth/RefreshToken';
+import { RefreshTokenCustomerDTO } from '../../../../domain/dtos/auth/RefreshTokenCustomer';
 import { Either } from '../../../../domain/utils/either/either';
 import { RequiredParametersError } from '../../../../domain/utils/errors/RequiredParametersError';
 
@@ -20,7 +21,7 @@ export abstract class AbstractRefreshTokenUseCase {
    * Executes the refresh token user use case.
    *
    * @async
-   * @param {RefreshTokenDTO} refreshToken - The refresh token information.
+   * @param {RefreshTokenCustomerDTO} refreshToken - The refresh token information.
    * @returns {Promise<RefreshToken>} The response data.
    *
    * @remarks
@@ -28,6 +29,6 @@ export abstract class AbstractRefreshTokenUseCase {
    * authentication token based on the provided refresh token identifier.
    */
   abstract execute(
-    refreshToken: RefreshTokenDTO,
+    refreshToken: RefreshTokenCustomerDTO,
   ): Promise<RefreshTokenResponse>;
 }
