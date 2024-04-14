@@ -6,12 +6,21 @@ import { RequiredParametersError } from '../../../../domain/utils/errors/Require
 import { AbstractPasswordHasher } from '../../../providers/PasswordHasher';
 import { AbstractCustomerRepository } from '../../../repositories/Customer';
 import { SignInUseCase } from './SignIn';
+import { AbstractGenerateRefreshTokenProvider } from '../../../../application/providers/GenerateRefreshToken';
+import { AbstractRefreshTokenRepository } from '../../../../application/repositories/RefreshToken';
 
 describe('SignInUseCase', () => {
   let customerRepository: AbstractCustomerRepository;
   let jwtService: JwtService;
   let passwordHasher: AbstractPasswordHasher;
+  let generateRefreshTokenProvider: AbstractGenerateRefreshTokenProvider;
+  let refreshTokenRepository: AbstractRefreshTokenRepository;
   let signInUseCase: SignInUseCase;
+  const mockRefreshTokenId = { refreshTokenId: 'mockRefreshTokenId' };
+  const mockRefreshToken = {
+    customer_id: 'mockUserId',
+    expires_in: 'mockExpiresIn',
+  };
   const emailOrPasswordWrong = left(
     new RequiredParametersError(AuthErrorMessageEnum.EmailOrPasswordWrong),
   );
@@ -20,10 +29,21 @@ describe('SignInUseCase', () => {
     customerRepository = {} as AbstractCustomerRepository;
     jwtService = {} as JwtService;
     passwordHasher = {} as AbstractPasswordHasher;
+    refreshTokenRepository = {
+      create: jest.fn(),
+      findById: jest.fn(),
+      findByCustomerId: jest.fn(),
+      delete: jest.fn(),
+    };
+    generateRefreshTokenProvider = {
+      generateToken: jest.fn(),
+    };
+
     signInUseCase = new SignInUseCase(
       customerRepository,
-      jwtService,
       passwordHasher,
+      generateRefreshTokenProvider,
+      refreshTokenRepository,
     );
   });
 
@@ -46,7 +66,9 @@ describe('SignInUseCase', () => {
       const result = await signInUseCase.execute(email, password);
 
       expect(result.isRight()).toBe(true);
-      expect(result.value).toEqual({ access_token: mockToken });
+      expect(result.value).toHaveProperty('token')
+      expect(result.value).toHaveProperty('refreshToken')
+      expect(result.value).toHaveProperty('customer')
     });
 
     it('should return an error when the customer does not exist', async () => {
