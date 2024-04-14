@@ -21,7 +21,7 @@ To install the project, follow these steps:
 1. **Clone the Repository**: 
    Clone the project repository from GitHub using the following command:
    ```bash
-   git clone https://github.com/deivisonisidoro/nest-api.git
+   git clone [https://github.com/deivisonisidoro/nest-api.git](https://github.com/Manu-Deiv/customer-api.git)
    ```
 2. **Navigate to the Project Directory**: 
    Change your current directory to the root directory of the project:
