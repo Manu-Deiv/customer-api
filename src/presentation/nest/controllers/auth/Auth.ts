@@ -7,12 +7,10 @@ import {
   HttpStatus,
   Post,
   Request,
-  UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { LoginRequestDTO } from '../../../../domain/dtos/auth/Login';
-import { AuthGuard } from '../../guards/auth/auth.guard';
 import { Public } from '../../helpers/customDecorator/Public';
 import { AbstractAuthManager } from '../../managers/Auth';
 
@@ -48,7 +46,6 @@ export class AuthController {
    * @param {Request} req - The request object.
    * @returns {any} The customer profile.
    */
-  @UseGuards(AuthGuard)
   @Get('profile')
   getProfile(@Request() req) {
     return req.customer;

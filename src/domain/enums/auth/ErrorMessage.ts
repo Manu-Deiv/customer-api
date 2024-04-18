@@ -12,4 +12,8 @@ export enum AuthErrorMessageEnum {
    * Message indicating that the authentication token is either invalid or expired.
    */
   TokenInvalidOrExpired = 'Token invalid or expired',
+  /**
+   * Message indicating that the Authorization header is missing in the request.
+   */
+  AuthorizationHeaderMissing = 'Authorization header missing',
 }

@@ -1,13 +1,13 @@
 import { JwtService } from '@nestjs/jwt';
 
+import { AbstractGenerateRefreshTokenProvider } from '../../../../application/providers/GenerateRefreshToken';
+import { AbstractRefreshTokenRepository } from '../../../../application/repositories/RefreshToken';
 import { AuthErrorMessageEnum } from '../../../../domain/enums/auth/ErrorMessage';
 import { left } from '../../../../domain/utils/either/either';
 import { RequiredParametersError } from '../../../../domain/utils/errors/RequiredParametersError';
 import { AbstractPasswordHasher } from '../../../providers/PasswordHasher';
 import { AbstractCustomerRepository } from '../../../repositories/Customer';
 import { SignInUseCase } from './SignIn';
-import { AbstractGenerateRefreshTokenProvider } from '../../../../application/providers/GenerateRefreshToken';
-import { AbstractRefreshTokenRepository } from '../../../../application/repositories/RefreshToken';
 
 describe('SignInUseCase', () => {
   let customerRepository: AbstractCustomerRepository;
@@ -16,11 +16,7 @@ describe('SignInUseCase', () => {
   let generateRefreshTokenProvider: AbstractGenerateRefreshTokenProvider;
   let refreshTokenRepository: AbstractRefreshTokenRepository;
   let signInUseCase: SignInUseCase;
-  const mockRefreshTokenId = { refreshTokenId: 'mockRefreshTokenId' };
-  const mockRefreshToken = {
-    customer_id: 'mockUserId',
-    expires_in: 'mockExpiresIn',
-  };
+
   const emailOrPasswordWrong = left(
     new RequiredParametersError(AuthErrorMessageEnum.EmailOrPasswordWrong),
   );
@@ -66,9 +62,9 @@ describe('SignInUseCase', () => {
       const result = await signInUseCase.execute(email, password);
 
       expect(result.isRight()).toBe(true);
-      expect(result.value).toHaveProperty('token')
-      expect(result.value).toHaveProperty('refreshToken')
-      expect(result.value).toHaveProperty('customer')
+      expect(result.value).toHaveProperty('token');
+      expect(result.value).toHaveProperty('refreshToken');
+      expect(result.value).toHaveProperty('customer');
     });
 
     it('should return an error when the customer does not exist', async () => {

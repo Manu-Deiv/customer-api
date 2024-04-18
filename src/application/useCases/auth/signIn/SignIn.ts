@@ -1,11 +1,11 @@
+import { AbstractGenerateRefreshTokenProvider } from '../../../../application/providers/GenerateRefreshToken';
+import { AbstractRefreshTokenRepository } from '../../../../application/repositories/RefreshToken';
 import { AuthErrorMessageEnum } from '../../../../domain/enums/auth/ErrorMessage';
 import { left, right } from '../../../../domain/utils/either/either';
 import { RequiredParametersError } from '../../../../domain/utils/errors/RequiredParametersError';
 import { AbstractPasswordHasher } from '../../../providers/PasswordHasher';
 import { AbstractCustomerRepository } from '../../../repositories/Customer';
 import { AbstractSingInUseCase, LoginResponse } from './AbstractSingIn';
-import { AbstractGenerateRefreshTokenProvider } from '../../../../application/providers/GenerateRefreshToken';
-import { AbstractRefreshTokenRepository } from '../../../../application/repositories/RefreshToken';
 
 /**
  * Use case for authenticating a customer.
@@ -53,16 +53,16 @@ export class SignInUseCase implements AbstractSingInUseCase {
     }
     const token = await this.generateRefreshTokenProvider.generateToken(
       customer.id,
-    )
+    );
     const refreshTokenFounded =
-      await this.refreshTokenRepository.findByCustomerId(customer.id)
+      await this.refreshTokenRepository.findByCustomerId(customer.id);
 
     if (refreshTokenFounded) {
-      await this.refreshTokenRepository.delete(customer.id)
+      await this.refreshTokenRepository.delete(customer.id);
     }
 
-    const refreshToken = await this.refreshTokenRepository.create(customer.id)
-    
-    return right({ token, refreshToken, customer });
+    const refreshToken = await this.refreshTokenRepository.create(customer.id);
+
+    return right({ access_token: token, refreshToken, customer });
   }
 }

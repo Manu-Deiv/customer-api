@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import dayjs from 'dayjs';
+import * as dayjs from 'dayjs';
 
 import { AbstractRefreshTokenRepository } from '../../application/repositories/RefreshToken';
 import { RefreshTokenDTO } from '../../domain/dtos/auth/RefreshToken';
