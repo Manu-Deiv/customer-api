@@ -3,7 +3,6 @@ import { sign } from 'jsonwebtoken';
 import { AbstractGenerateRefreshTokenProvider } from '../../application/providers/GenerateRefreshToken';
 import { EnvironmentVariables } from '../configs/EnvironmentVariables';
 
-
 /**
  * Implementation of the refresh token generation provider.
  *
@@ -26,7 +25,7 @@ export class GenerateRefreshTokenProvider
 
     const secretKey = env.getSecretKey();
     const expiresIn = env.getAccessTokenExpiresIn();
-    
+
     if (!secretKey) {
       throw new Error('API_SECRET is missing in the environment variables.');
     }

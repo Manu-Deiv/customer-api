@@ -3,8 +3,8 @@ import * as dayjs from 'dayjs';
 
 import { AbstractRefreshTokenRepository } from '../../application/repositories/RefreshToken';
 import { RefreshTokenDTO } from '../../domain/dtos/auth/RefreshToken';
-import { PrismaService } from '../database/nestPrisma/prisma.service';
 import { EnvironmentVariables } from '../configs/EnvironmentVariables';
+import { PrismaService } from '../database/nestPrisma/prisma.service';
 
 /**
  * Prisma implementation of the refresh token repository.
@@ -31,7 +31,7 @@ export class PrismaRefreshTokenRepository
    */
   async create(customerId: string): Promise<RefreshTokenDTO> {
     const env = EnvironmentVariables.getInstance();
-    const refreshTokenExpiresIn = env.getRefreshTokenExpiresIn()
+    const refreshTokenExpiresIn = env.getRefreshTokenExpiresIn();
     const expiresIn = dayjs().add(Number(refreshTokenExpiresIn), 'hour').unix();
 
     const generateRefreshToken = await this.prisma.refreshToken.create({

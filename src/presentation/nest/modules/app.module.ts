@@ -11,7 +11,6 @@ import { AuthModule } from './auth.module';
 import { CustomersModule } from './customers.module';
 import { PrismaModule } from './prisma.module';
 
-
 @Module({
   imports: [
     CustomersModule,

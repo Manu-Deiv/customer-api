@@ -1,11 +1,11 @@
-import 'dotenv/config'
+import 'dotenv/config';
 
 /**
  * Class to handle environment variables in a Node.js application.
  */
 export class EnvironmentVariables {
   private static instance: EnvironmentVariables;
-  
+
   /**
    * Constructs the EnvironmentVariables class. Private constructor to enforce singleton pattern.
    */
