@@ -6,10 +6,11 @@ import {
 } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
-import { PrismaModule } from '../../infra/database/nestPrisma/prisma.module';
+
 import { LoggerMiddleware } from './middlewares/ensureAuthenticated';
 import { AuthModule } from './modules/auth.module';
 import { CustomersModule } from './modules/customers.module';
+import { PrismaModule } from './modules/prisma.module';
 
 @Module({
   imports: [
