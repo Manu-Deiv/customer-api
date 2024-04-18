@@ -2,8 +2,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as dotenv from 'dotenv';
-
-import { AppModule } from './app.module';
+import { AppModule } from './src/presentation/nest/modules/app.module';
 
 async function bootstrap() {
   dotenv.config();

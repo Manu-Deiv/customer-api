@@ -8,7 +8,7 @@ import * as request from 'supertest';
 
 import { CustomerErrorMessageEnum } from '../../src/domain/enums/customer/ErrorMessage';
 import { PrismaService } from '../../src/infra/database/nestPrisma/prisma.service';
-import { AppModule } from '../../src/presentation/nest/app.module';
+import { AppModule } from '../../src/presentation/nest/modules/app.module';
 
 /**
  * Describe block for CustomerController E2E tests.

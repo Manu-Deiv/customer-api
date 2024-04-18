@@ -62,7 +62,7 @@ describe('SignInUseCase', () => {
       const result = await signInUseCase.execute(email, password);
 
       expect(result.isRight()).toBe(true);
-      expect(result.value).toHaveProperty('token');
+      expect(result.value).toHaveProperty('access_token');
       expect(result.value).toHaveProperty('refreshToken');
       expect(result.value).toHaveProperty('customer');
     });

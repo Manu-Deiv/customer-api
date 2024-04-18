@@ -4,6 +4,7 @@ import * as dayjs from 'dayjs';
 import { AbstractRefreshTokenRepository } from '../../application/repositories/RefreshToken';
 import { PrismaService } from '../database/nestPrisma/prisma.service';
 import { PrismaRefreshTokenRepository } from './PrismaRefreshToken';
+import { EnvironmentVariables } from '../configs/EnvironmentVariables';
 
 describe('PrismaRefreshTokenRepository', () => {
   let repository: AbstractRefreshTokenRepository;
@@ -43,7 +44,9 @@ describe('PrismaRefreshTokenRepository', () => {
   describe('create', () => {
     it('should create a refresh token', async () => {
       const customerId = 'customerId';
-      const expiresIn = dayjs().add(2, 'hour').unix();
+      const env = EnvironmentVariables.getInstance();
+      const refreshTokenExpiresIn = env.getRefreshTokenExpiresIn()
+      const expiresIn = dayjs().add(Number(refreshTokenExpiresIn), 'hour').unix();
       const generatedToken = {
         id: 'token_id',
         customer_id: customerId,

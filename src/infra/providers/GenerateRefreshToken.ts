@@ -1,9 +1,8 @@
-import { config } from 'dotenv';
 import { sign } from 'jsonwebtoken';
 
 import { AbstractGenerateRefreshTokenProvider } from '../../application/providers/GenerateRefreshToken';
+import { EnvironmentVariables } from '../configs/EnvironmentVariables';
 
-config();
 
 /**
  * Implementation of the refresh token generation provider.
@@ -23,15 +22,18 @@ export class GenerateRefreshTokenProvider
    * @throws {Error} Throws an error if the SECRET_KEY is missing in the environment variables.
    */
   async generateToken(token: string): Promise<string> {
-    const secretKey = process.env.SECRET_KEY;
+    const env = EnvironmentVariables.getInstance();
 
+    const secretKey = env.getSecretKey();
+    const expiresIn = env.getAccessTokenExpiresIn();
+    
     if (!secretKey) {
       throw new Error('API_SECRET is missing in the environment variables.');
     }
 
     const generatedToken = sign({}, secretKey, {
       subject: token,
-      expiresIn: '1h',
+      expiresIn,
     });
 
     return generatedToken;
