@@ -6,7 +6,6 @@ import {
 } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
-
 import { LoggerMiddleware } from './middlewares/ensureAuthenticated';
 import { AuthModule } from './modules/auth.module';
 import { CustomersModule } from './modules/customers.module';
