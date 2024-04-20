@@ -2,12 +2,14 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 
 import { AbstractGenerateRefreshTokenProvider } from '../../../application/providers/GenerateRefreshToken';
+import { AbstractKafkaProducer } from '../../../application/providers/kafka/producer';
 import { AbstractPasswordHasher } from '../../../application/providers/PasswordHasher';
 import { AbstractTokenManagerProvider } from '../../../application/providers/TokenMagerProvider';
 import { AbstractCustomerRepository } from '../../../application/repositories/Customer';
 import { AbstractRefreshTokenRepository } from '../../../application/repositories/RefreshToken';
 import { PrismaService } from '../../../infra/database/nestPrisma/prisma.service';
 import { GenerateRefreshTokenProvider } from '../../../infra/providers/GenerateRefreshToken';
+import { KafkaProducer } from '../../../infra/providers/kafka/producer';
 import { PasswordHasher } from '../../../infra/providers/PasswordHasher';
 import { TokenManagerProvider } from '../../../infra/providers/TokenManager';
 import { PrismaCustomerRepository } from '../../../infra/repositories/PrismaCustomer';
@@ -56,6 +58,10 @@ import { CustomersModule } from './customers.module';
     {
       provide: AbstractTokenManagerProvider,
       useClass: TokenManagerProvider,
+    },
+    {
+      provide: AbstractKafkaProducer,
+      useClass: KafkaProducer,
     },
     PrismaService,
   ],

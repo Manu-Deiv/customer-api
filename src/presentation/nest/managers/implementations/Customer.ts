@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { AbstractKafkaProducer } from '../../../../application/providers/kafka/producer';
 import { DeleteCustomerResponse } from '../../../../application/useCases/customer/Delete/AbstractDeleteCustomer';
 import { CustomerResponse } from '../../../../application/useCases/customer/Read/AbstractReadCustomer';
 import { GetCustomersResponse } from '../../../../application/useCases/customer/Read/AbstractReadCustomers';
@@ -30,6 +31,7 @@ export class CustomerManager implements AbstractCustomerManager {
   constructor(
     private readonly customerRepository: AbstractCustomerRepository,
     private passwordHasher: AbstractPasswordHasher,
+    private kafkaProducer: AbstractKafkaProducer,
   ) {}
 
   /**
@@ -41,7 +43,11 @@ export class CustomerManager implements AbstractCustomerManager {
     createCustomerRequestDto: CreateCustomerRequestDto,
   ): Promise<CreateCustomerResponse> {
     const createCustomerUseCase: AbstractCreateCustomerUseCase =
-      new CreateCustomerUseCase(this.customerRepository, this.passwordHasher);
+      new CreateCustomerUseCase(
+        this.customerRepository,
+        this.passwordHasher,
+        this.kafkaProducer,
+      );
     const result = await createCustomerUseCase.execute(
       createCustomerRequestDto,
     );
