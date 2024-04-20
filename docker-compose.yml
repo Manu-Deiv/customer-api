@@ -12,8 +12,6 @@ services:
       POSTGRES_DB: nestjs
     volumes:
       - pgdata:/var/lib/postgresql/data
-    env_file:
-      - .env
 
   test-db:
     image: postgres:13
@@ -23,19 +21,6 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123
       POSTGRES_DB: nestjs
-    env_file:
-      - .env
-
-  nest-app:
-    build:
-      context: .
-      dockerfile: Dockerfile.nest
-    ports:
-      - 3000:3000
-    depends_on:
-      - dev-db
-    environment:
-      - DATABASE_URL=postgresql://postgres:123@localhost:5432/nestjs?schema=public
 
 volumes:
   pgdata: {}

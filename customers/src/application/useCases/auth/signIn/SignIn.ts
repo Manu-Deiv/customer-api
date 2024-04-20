@@ -1,5 +1,5 @@
-import { AbstractGenerateRefreshTokenProvider } from '../../../../application/providers/GenerateRefreshToken';
-import { AbstractRefreshTokenRepository } from '../../../../application/repositories/RefreshToken';
+import { AbstractGenerateRefreshTokenProvider } from '../../../providers/GenerateRefreshToken';
+import { AbstractRefreshTokenRepository } from '../../../repositories/RefreshToken';
 import { AuthErrorMessageEnum } from '../../../../domain/enums/auth/ErrorMessage';
 import { left, right } from '../../../../domain/utils/either/either';
 import { RequiredParametersError } from '../../../../domain/utils/errors/RequiredParametersError';
