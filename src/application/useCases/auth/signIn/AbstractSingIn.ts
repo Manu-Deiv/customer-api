@@ -1,9 +1,11 @@
+import { RefreshTokenDTO } from '../../../../domain/dtos/auth/RefreshToken';
+import { Customer } from '../../../../domain/entities/Customer';
 import { Either } from '../../../../domain/utils/either/either';
 import { RequiredParametersError } from '../../../../domain/utils/errors/RequiredParametersError';
 
 export type LoginResponse = Either<
   RequiredParametersError,
-  { access_token: string }
+  { access_token: string; refreshToken: RefreshTokenDTO; customer: Customer }
 >;
 
 /**

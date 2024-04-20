@@ -1,14 +1,18 @@
 import { Module } from '@nestjs/common';
-import { APP_GUARD } from '@nestjs/core';
 import { JwtModule } from '@nestjs/jwt';
 
+import { AbstractGenerateRefreshTokenProvider } from '../../../application/providers/GenerateRefreshToken';
 import { AbstractPasswordHasher } from '../../../application/providers/PasswordHasher';
+import { AbstractTokenManagerProvider } from '../../../application/providers/TokenMagerProvider';
 import { AbstractCustomerRepository } from '../../../application/repositories/Customer';
+import { AbstractRefreshTokenRepository } from '../../../application/repositories/RefreshToken';
 import { PrismaService } from '../../../infra/database/nestPrisma/prisma.service';
+import { GenerateRefreshTokenProvider } from '../../../infra/providers/GenerateRefreshToken';
 import { PasswordHasher } from '../../../infra/providers/PasswordHasher';
+import { TokenManagerProvider } from '../../../infra/providers/TokenManager';
 import { PrismaCustomerRepository } from '../../../infra/repositories/PrismaCustomer';
+import { PrismaRefreshTokenRepository } from '../../../infra/repositories/PrismaRefreshToken';
 import { AuthController } from '../controllers/auth/Auth';
-import { AuthGuard } from '../guards/auth/auth.guard';
 import { AbstractAuthManager } from '../managers/Auth';
 import { AbstractCustomerManager } from '../managers/Customer';
 import { AuthManager } from '../managers/implementations/Auth';
@@ -30,10 +34,6 @@ import { CustomersModule } from './customers.module';
       useClass: CustomerManager,
     },
     {
-      provide: APP_GUARD,
-      useClass: AuthGuard,
-    },
-    {
       provide: AbstractAuthManager,
       useClass: AuthManager,
     },
@@ -44,6 +44,18 @@ import { CustomersModule } from './customers.module';
     {
       provide: AbstractPasswordHasher,
       useClass: PasswordHasher,
+    },
+    {
+      provide: AbstractGenerateRefreshTokenProvider,
+      useClass: GenerateRefreshTokenProvider,
+    },
+    {
+      provide: AbstractRefreshTokenRepository,
+      useClass: PrismaRefreshTokenRepository,
+    },
+    {
+      provide: AbstractTokenManagerProvider,
+      useClass: TokenManagerProvider,
     },
     PrismaService,
   ],
