@@ -1,5 +1,5 @@
-import { JwtService } from '@nestjs/jwt';
-
+import { AbstractGenerateRefreshTokenProvider } from '../../../../application/providers/GenerateRefreshToken';
+import { AbstractRefreshTokenRepository } from '../../../../application/repositories/RefreshToken';
 import { AuthErrorMessageEnum } from '../../../../domain/enums/auth/ErrorMessage';
 import { left, right } from '../../../../domain/utils/either/either';
 import { RequiredParametersError } from '../../../../domain/utils/errors/RequiredParametersError';
@@ -24,8 +24,9 @@ export class SignInUseCase implements AbstractSingInUseCase {
    */
   constructor(
     private customerRepository: AbstractCustomerRepository,
-    private jwtService: JwtService,
     private passwordHasher: AbstractPasswordHasher,
+    private generateRefreshTokenProvider: AbstractGenerateRefreshTokenProvider,
+    private refreshTokenRepository: AbstractRefreshTokenRepository,
   ) {}
 
   /**
@@ -50,9 +51,18 @@ export class SignInUseCase implements AbstractSingInUseCase {
         new RequiredParametersError(AuthErrorMessageEnum.EmailOrPasswordWrong),
       );
     }
-    const payload = { sub: customer.id, email: customer.email };
-    return right({
-      access_token: await this.jwtService.signAsync(payload),
-    });
+    const token = await this.generateRefreshTokenProvider.generateToken(
+      customer.id,
+    );
+    const refreshTokenFounded =
+      await this.refreshTokenRepository.findByCustomerId(customer.id);
+
+    if (refreshTokenFounded) {
+      await this.refreshTokenRepository.delete(customer.id);
+    }
+
+    const refreshToken = await this.refreshTokenRepository.create(customer.id);
+
+    return right({ access_token: token, refreshToken, customer });
   }
 }
