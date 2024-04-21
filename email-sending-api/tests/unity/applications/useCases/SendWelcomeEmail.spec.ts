@@ -1,9 +1,9 @@
 import { describe, beforeEach, it, vi, expect } from 'vitest';
+import { SendWelcomeEmailUseCase } from '../../../../src/application/usecases/sendWelcomeEmail/SendWelcomeEmail';
+import { SendWelcomeEmailUseCaseInterface } from '../../../../src/application/usecases/sendWelcomeEmail/SendWelcomeEmailInterface';
+import { EmailGeneratorInterface } from '../../../../src/domain/generators/emailGenerators/EmailGenerator';
+import { EmailSenderInterface } from '../../../../src/domain/providers/EmailSender';
 
-import { EmailGeneratorInterface } from '../../../domain/generators/emailGenerators/EmailGenerator';
-import { EmailSenderInterface } from '../../../domain/providers/EmailSender';
-import { SendWelcomeEmailUseCase } from './SendWelcomeEmail';
-import { SendWelcomeEmailUseCaseInterface } from './SendWelcomeEmailInterface';
 
 describe('SendWelcomeEmailUseCase', () => {
   let emailSenderMock: EmailSenderInterface;
