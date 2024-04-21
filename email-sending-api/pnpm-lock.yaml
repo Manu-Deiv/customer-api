@@ -11,6 +11,9 @@ dependencies:
   '@types/nodemailer':
     specifier: ^6.4.14
     version: 6.4.14
+  dotenv:
+    specifier: ^16.4.5
+    version: 16.4.5
   kafkajs:
     specifier: ^2.2.4
     version: 2.2.4
@@ -870,6 +873,11 @@ packages:
     dependencies:
       esutils: 2.0.3
     dev: true
+
+  /dotenv@16.4.5:
+    resolution: {integrity: sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==}
+    engines: {node: '>=12'}
+    dev: false
 
   /esbuild@0.20.2:
     resolution: {integrity: sha512-WdOOppmUNU+IbZ0PaDiTst80zjnrOkyJNHoKupIcVyU8Lvla3Ugx94VzkQ32Ijqd7UhHJy75gNWDMUekcrSJ6g==}
