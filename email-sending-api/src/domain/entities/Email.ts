@@ -1,4 +1,4 @@
-class Email {
+export class EmailEntity {
   to: string;
   subject: string;
   body: string;
@@ -9,5 +9,3 @@ class Email {
     this.body = body;
   }
 }
-
-export default Email;

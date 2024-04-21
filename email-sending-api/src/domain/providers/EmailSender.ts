@@ -1,5 +1,5 @@
-import Email from '../entities/Email';
+import { EmailEntity } from '../entities/Email';
 
 export interface EmailSenderInterface {
-  send(email: Email): Promise<void>;
+  send(emailEntity: EmailEntity): Promise<void>;
 }

@@ -1,5 +1,5 @@
-import Email from '../../entities/Email';
+import { EmailEntity } from '../../entities/Email';
 
 export interface EmailGeneratorInterface {
-  generateWelcomeEmail(username: string, email: string): Email;
+  generateWelcomeEmail(username: string, email: string): EmailEntity;
 }
