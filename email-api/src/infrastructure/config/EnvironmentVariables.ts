@@ -89,6 +89,14 @@ export class EnvironmentVariables {
   }
 
   /**
+   * Retrieves the email address from environment variables or defaults to an empty string if not provided.
+   * @returns The email address from the environment variable MAIL_FROM or an empty string if not set.
+   */
+  public getMailFrom(): string {
+    return process.env.MAIL_FROM || '';
+  }
+
+  /**
    * Retrieves the mail password from environment variables.
    * @returns The mail password.
    */
@@ -118,4 +126,13 @@ export class EnvironmentVariables {
   public getHostIp(): string {
     return process.env.HOST_IP || ip.address();
   }
+
+  /**
+   * Retrieves the host port from environment variables or defaults to 3001 if not provided.
+   * @returns The host port number.
+   */
+  public getHostPort(): number {
+    return parseInt(process.env.API_PORT || '3001', 10);
+  }
+
 }
