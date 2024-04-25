@@ -1,24 +1,24 @@
 import { Injectable } from '@nestjs/common';
 
-import { AbstractKafkaProducer } from '../../../../application/providers/kafka/producer';
-import { DeleteCustomerResponse } from '../../../../application/useCases/customer/Delete/AbstractDeleteCustomer';
-import { CustomerResponse } from '../../../../application/useCases/customer/Read/AbstractReadCustomer';
-import { GetCustomersResponse } from '../../../../application/useCases/customer/Read/AbstractReadCustomers';
-import { AbstractCustomerManager } from '../Customer';
-import { AbstractPasswordHasher } from './../../../../application/providers/PasswordHasher';
-import { AbstractCustomerRepository } from './../../../../application/repositories/Customer';
+import { AbstractPasswordHasher } from '../../../../application/providers/PasswordHasher';
+import { AbstractCustomerRepository } from '../../../../application/repositories/Customer';
 import {
   AbstractCreateCustomerUseCase,
   CreateCustomerResponse,
-} from './../../../../application/useCases/customer/Create/AbstractCreateCustomer';
-import { CreateCustomerUseCase } from './../../../../application/useCases/customer/Create/CreateCustomer';
-import { DeleteCustomerUseCase } from './../../../../application/useCases/customer/Delete/DeleteCustomer';
-import { ReadCustomerUseCase } from './../../../../application/useCases/customer/Read/ReadCustomer';
-import { ReadCustomersUseCase } from './../../../../application/useCases/customer/Read/ReadCustomers';
-import { UpdateCustomerUseCase } from './../../../../application/useCases/customer/Update/UpdateCustomer';
-import { CreateCustomerRequestDto } from './../../../../domain/dtos/customer/Create';
-import { ReadCustomersRequestDto } from './../../../../domain/dtos/customer/ReadCustomers';
-import { UpdateCustomerRequestDto } from './../../../../domain/dtos/customer/Update';
+} from '../../../../application/useCases/customer/Create/AbstractCreateCustomer';
+import { CreateCustomerUseCase } from '../../../../application/useCases/customer/Create/CreateCustomer';
+import { DeleteCustomerResponse } from '../../../../application/useCases/customer/Delete/AbstractDeleteCustomer';
+import { DeleteCustomerUseCase } from '../../../../application/useCases/customer/Delete/DeleteCustomer';
+import { CustomerResponse } from '../../../../application/useCases/customer/Read/AbstractReadCustomer';
+import { GetCustomersResponse } from '../../../../application/useCases/customer/Read/AbstractReadCustomers';
+import { ReadCustomerUseCase } from '../../../../application/useCases/customer/Read/ReadCustomer';
+import { ReadCustomersUseCase } from '../../../../application/useCases/customer/Read/ReadCustomers';
+import { UpdateCustomerUseCase } from '../../../../application/useCases/customer/Update/UpdateCustomer';
+import { CreateCustomerRequestDto } from '../../../../domain/dtos/customer/Create';
+import { ReadCustomersRequestDto } from '../../../../domain/dtos/customer/ReadCustomers';
+import { UpdateCustomerRequestDto } from '../../../../domain/dtos/customer/Update';
+import { AbstractCustomerManager } from '../Customer';
+import { AbstractKafkaProducer } from '../../../../application/providers/kafka/producer';
 
 /**
  * Implementation of the service handling customer operations.

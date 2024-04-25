@@ -1,10 +1,10 @@
-import { AbstractGenerateRefreshTokenProvider } from '../../../../application/providers/GenerateRefreshToken';
-import { AbstractRefreshTokenRepository } from '../../../../application/repositories/RefreshToken';
 import { AuthErrorMessageEnum } from '../../../../domain/enums/auth/ErrorMessage';
 import { left, right } from '../../../../domain/utils/either/either';
 import { RequiredParametersError } from '../../../../domain/utils/errors/RequiredParametersError';
+import { AbstractGenerateRefreshTokenProvider } from '../../../providers/GenerateRefreshToken';
 import { AbstractPasswordHasher } from '../../../providers/PasswordHasher';
 import { AbstractCustomerRepository } from '../../../repositories/Customer';
+import { AbstractRefreshTokenRepository } from '../../../repositories/RefreshToken';
 import { AbstractSingInUseCase, LoginResponse } from './AbstractSingIn';
 
 /**

@@ -12,8 +12,6 @@ services:
       POSTGRES_DB: nestjs
     volumes:
       - pgdata:/var/lib/postgresql/data
-    env_file:
-      - .env
 
   test-db:
     image: postgres:13
@@ -23,8 +21,6 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123
       POSTGRES_DB: nestjs
-    env_file:
-      - .env
 
   zoo1:
     image: confluentinc/cp-zookeeper:7.3.2
