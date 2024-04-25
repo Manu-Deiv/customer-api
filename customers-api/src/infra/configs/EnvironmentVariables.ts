@@ -1,4 +1,7 @@
-import 'dotenv/config';
+import * as dotenv from 'dotenv';
+import ip from 'ip';
+
+dotenv.config();
 
 /**
  * Class to handle environment variables in a Node.js application.
@@ -124,5 +127,12 @@ export class EnvironmentVariables {
    */
   public getRefreshTokenExpiresIn(): string {
     return process.env.REFRESH_TOKEN_EXPIRES_IN || '';
+  }
+  /**
+   * Retrieves the host IP address from environment variables or automatically detects it if not provided.
+   * @returns The host IP address.
+   */
+  public getHostIp(): string {
+    return process.env.HOST_IP || ip.address();
   }
 }

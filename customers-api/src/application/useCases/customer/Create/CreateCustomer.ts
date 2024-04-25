@@ -2,6 +2,7 @@ import { CreateCustomerRequestDto } from '../../../../domain/dtos/customer/Creat
 import { CustomerErrorMessageEnum } from '../../../../domain/enums/customer/ErrorMessage';
 import { left, right } from '../../../../domain/utils/either/either';
 import { RequiredParametersError } from '../../../../domain/utils/errors/RequiredParametersError';
+import { AbstractKafkaProducer } from '../../../providers/kafka/producer';
 import { AbstractPasswordHasher } from '../../../providers/PasswordHasher';
 import { AbstractCustomerRepository } from '../../../repositories/Customer';
 import {
@@ -24,8 +25,9 @@ export class CreateCustomerUseCase implements AbstractCreateCustomerUseCase {
    * @param {AbstractPasswordHasher} passwordHasher - The password hasher provider.
    */
   constructor(
-    protected customerRepository: AbstractCustomerRepository,
-    protected passwordHasher: AbstractPasswordHasher,
+    private customerRepository: AbstractCustomerRepository,
+    private passwordHasher: AbstractPasswordHasher,
+    private kafkaProducer: AbstractKafkaProducer,
   ) {}
 
   /**
@@ -55,6 +57,7 @@ export class CreateCustomerUseCase implements AbstractCreateCustomerUseCase {
       ...createCustomerRequestDto,
       password: passwordHashed,
     });
+    await this.kafkaProducer.execute('CUSTOMER_CREATED', customer);
     return right(customer);
   }
 }

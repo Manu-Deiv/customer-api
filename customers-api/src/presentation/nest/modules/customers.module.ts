@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
 
+import { AbstractKafkaProducer } from '../../../application/providers/kafka/producer';
 import { AbstractPasswordHasher } from '../../../application/providers/PasswordHasher';
 import { AbstractCustomerRepository } from '../../../application/repositories/Customer';
 import { PrismaService } from '../../../infra/database/nestPrisma/prisma.service';
+import { KafkaProducer } from '../../../infra/providers/kafka/producer';
 import { PasswordHasher } from '../../../infra/providers/PasswordHasher';
 import { PrismaCustomerRepository } from '../../../infra/repositories/PrismaCustomer';
 import { CustomersController } from '../controllers/customer/Customer';
@@ -23,6 +25,10 @@ import { CustomerManager } from '../managers/implementations/Customer';
     {
       provide: AbstractPasswordHasher,
       useClass: PasswordHasher,
+    },
+    {
+      provide: AbstractKafkaProducer,
+      useClass: KafkaProducer,
     },
     PrismaService,
   ],

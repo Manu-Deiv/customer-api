@@ -18,6 +18,7 @@ import { CreateCustomerRequestDto } from '../../../../domain/dtos/customer/Creat
 import { ReadCustomersRequestDto } from '../../../../domain/dtos/customer/ReadCustomers';
 import { UpdateCustomerRequestDto } from '../../../../domain/dtos/customer/Update';
 import { AbstractCustomerManager } from '../Customer';
+import { AbstractKafkaProducer } from '../../../../application/providers/kafka/producer';
 
 /**
  * Implementation of the service handling customer operations.
@@ -30,6 +31,7 @@ export class CustomerManager implements AbstractCustomerManager {
   constructor(
     private readonly customerRepository: AbstractCustomerRepository,
     private passwordHasher: AbstractPasswordHasher,
+    private kafkaProducer: AbstractKafkaProducer,
   ) {}
 
   /**
@@ -41,7 +43,11 @@ export class CustomerManager implements AbstractCustomerManager {
     createCustomerRequestDto: CreateCustomerRequestDto,
   ): Promise<CreateCustomerResponse> {
     const createCustomerUseCase: AbstractCreateCustomerUseCase =
-      new CreateCustomerUseCase(this.customerRepository, this.passwordHasher);
+      new CreateCustomerUseCase(
+        this.customerRepository,
+        this.passwordHasher,
+        this.kafkaProducer,
+      );
     const result = await createCustomerUseCase.execute(
       createCustomerRequestDto,
     );
