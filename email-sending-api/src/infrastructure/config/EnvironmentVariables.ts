@@ -1,4 +1,5 @@
 import * as dotenv from 'dotenv';
+import ip from 'ip';
 
 dotenv.config()
 /**
@@ -109,5 +110,12 @@ export class EnvironmentVariables {
    */
   public getSecretKey(): string {
     return process.env.SECRET_KEY || '';
+  }
+  /**
+   * Retrieves the host IP address from environment variables or automatically detects it if not provided.
+   * @returns The host IP address.
+   */
+   public getHostIp(): string {
+    return process.env.HOST_IP || ip.address();
   }
 }
