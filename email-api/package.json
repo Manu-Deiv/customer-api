@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start:dev": "tsx watch src/presentation/fastify/server.ts",
-    "test": "vitest",
+    "test": "vitest --no-watch",
     "coverage": "vitest run --coverage",
     "lint": "eslint \"{src,apps,libs,tests}/**/*.ts\" --fix",
     "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\""
