@@ -15,8 +15,14 @@ class EmailSender implements EmailSenderInterface {
    * Constructs an instance of EmailSender.
    */
   constructor() {
+    /**
+     * Retrieves environment variables for mail configuration.
+     */
     this.env = EnvironmentVariables.getInstance();
 
+    /**
+     * Creates a Nodemailer transporter using the configured mail settings.
+     */
     this.transporter = nodemailer.createTransport({
       host: this.env.getMailHost(),
       port: this.env.getMailPort(),
@@ -30,18 +36,23 @@ class EmailSender implements EmailSenderInterface {
 
   /**
    * Sends an email using Nodemailer.
-   * @param email - The email entity containing the email details.
-   * @returns A Promise that resolves when the email is sent successfully.
+   * @param {EmailEntity} email - The email entity containing the email details.
+   * @returns {Promise<void>} A Promise that resolves when the email is sent successfully.
    */
   async send(email: EmailEntity): Promise<void> {
-    // Send email using nodemailer
+    /**
+     * Constructs the mail options object with the email details.
+     */
     const mailOptions = {
-      from: 'your-email@example.com',
+      from: this.env.getMailFrom(),
       to: email.to,
       subject: email.subject,
-      text: email.body,
+      html: email.body,
     };
 
+    /**
+     * Sends the email using the configured transporter.
+     */
     await this.transporter.sendMail(mailOptions);
   }
 }

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start:dev": "tsx watch src/presentation/fastify/server.ts",
-    "test": "vitest",
+    "test": "vitest --no-watch",
     "coverage": "vitest run --coverage",
     "lint": "eslint \"{src,apps,libs,tests}/**/*.ts\" --fix",
     "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\""
@@ -18,8 +18,10 @@
     "@types/nodemailer": "^6.4.14",
     "dotenv": "^16.4.5",
     "fastify": "^4.26.2",
+    "handlebars": "^4.7.8",
     "ip": "^2.0.1",
-    "kafkajs": "^2.2.4"
+    "kafkajs": "^2.2.4",
+    "winston": "^3.13.0"
   },
   "devDependencies": {
     "@types/ip": "^1.1.3",
