@@ -10,7 +10,7 @@ import { SendWelcomeEmailUseCaseInterface } from './SendWelcomeEmailInterface';
  *
  * @remarks
  * This class encapsulates the logic for generating and sending welcome emails to new users.
- * It relies on instances of EmailSenderInterface and EmailGeneratorInterface for sending
+ * It relies on instances of EmailSenderInterface and WelcomeEmailGeneratorInterface for sending
  * and generating emails, respectively.
  */
 export class SendWelcomeEmailUseCase
@@ -23,7 +23,7 @@ export class SendWelcomeEmailUseCase
    * Constructs a new SendWelcomeEmailUseCase instance.
    *
    * @param emailSender - An instance implementing the EmailSenderInterface for sending emails.
-   * @param emailGenerator - An instance implementing the EmailGeneratorInterface for generating emails.
+   * @param emailGenerator - An instance implementing the WelcomeEmailGeneratorInterface for generating emails.
    */
   constructor(
     emailSender: EmailSenderInterface,
@@ -41,7 +41,7 @@ export class SendWelcomeEmailUseCase
    * @returns A Promise that resolves when the email is sent successfully, or rejects with an error.
    */
   async execute(username: string, email: string): Promise<void> {
-    const welcomeEmail = this.emailGenerator.generateWelcomeEmail(
+    const welcomeEmail = this.emailGenerator.execute(
       username,
       email,
     );

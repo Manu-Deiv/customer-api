@@ -14,5 +14,5 @@ export interface EmailGeneratorInterface {
    * @param email - The email address of the user.
    * @returns An EmailEntity representing the generated welcome email.
    */
-  generateWelcomeEmail(username: string, email: string): EmailEntity;
+  execute(username: string, email: string): EmailEntity;
 }

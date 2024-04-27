@@ -1,5 +1,5 @@
 import { SendWelcomeEmailUseCase } from "../../../application/usecases/sendWelcomeEmail/SendWelcomeEmail";
-import { EmailGenerator } from "../../generators/EmailGenerator";
+import { WelcomeEmailGenerator } from "../../generators/WelcomeEmailGenerator";
 import EmailSender from "../../providers/EmailSender";
 
 /**
@@ -9,10 +9,10 @@ import EmailSender from "../../providers/EmailSender";
  */
 async function sendWelcomeEmailComposer(jsonObject: any): Promise<void> {
   /**
-   * Creates instances of EmailSender, EmailGenerator, and SendWelcomeEmailUseCase.
+   * Creates instances of EmailSender, WelcomeEmailGenerator, and SendWelcomeEmailUseCase.
    */
   const emailSender = new EmailSender();
-  const emailGenerator = new EmailGenerator();
+  const emailGenerator = new WelcomeEmailGenerator();
   const sendWelcomeEmailUseCase = new SendWelcomeEmailUseCase(
     emailSender,
     emailGenerator,

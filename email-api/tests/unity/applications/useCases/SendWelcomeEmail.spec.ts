@@ -2,12 +2,12 @@ import { describe, beforeEach, it, vi, expect } from 'vitest';
 
 import { SendWelcomeEmailUseCase } from '../../../../src/application/usecases/sendWelcomeEmail/SendWelcomeEmail';
 import { SendWelcomeEmailUseCaseInterface } from '../../../../src/application/usecases/sendWelcomeEmail/SendWelcomeEmailInterface';
-import { EmailGeneratorInterface } from '../../../../src/domain/generators/emailGenerators/EmailGenerator';
+import { WelcomeEmailGeneratorInterface } from '../../../../src/domain/generators/emailGenerators/WelcomeEmailGenerator';
 import { EmailSenderInterface } from '../../../../src/domain/providers/EmailSender';
 
 describe('SendWelcomeEmailUseCase', () => {
   let emailSenderMock: EmailSenderInterface;
-  let emailGeneratorMock: EmailGeneratorInterface;
+  let emailGeneratorMock: WelcomeEmailGeneratorInterface;
   let sendWelcomeEmailUseCase: SendWelcomeEmailUseCaseInterface;
 
   beforeEach(() => {
