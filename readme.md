@@ -20,7 +20,7 @@ To run the E-Commerce Template project using Docker Compose, follow these steps:
 1. Clone the repository to your local machine:
 
    ```bash
-    git clone <repository_url>
+    git clone [<repository_url>](https://github.com/Manu-Deiv/ecommerce-template.git)
    ```
 2. Navigate to the root directory of the repository:
     ```bash	
