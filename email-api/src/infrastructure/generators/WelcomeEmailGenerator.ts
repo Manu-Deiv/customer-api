@@ -9,10 +9,10 @@ import { EmailGeneratorInterface } from '../../domain/generators/emailGenerators
  * Class responsible for generating email content based on templates.
  */
 export class WelcomeEmailGenerator implements EmailGeneratorInterface {
-  private templatePath: string; 
-  
-  constructor(){
-    this.templatePath =  path.resolve(
+  private templatePath: string;
+
+  constructor() {
+    this.templatePath = path.resolve(
       __dirname,
       '../../../src/infrastructure/templates/welcome.html',
     );
@@ -25,12 +25,10 @@ export class WelcomeEmailGenerator implements EmailGeneratorInterface {
    * @returns {EmailEntity} The generated email entity.
    */
   execute(username: string, email: string): EmailEntity {
-
     const templateSource = fs.readFileSync(this.templatePath, 'utf8');
     const welcomeTemplate = Handlebars.compile(templateSource);
 
     const htmlContent = welcomeTemplate({ username, email });
-
 
     const subject = `Welcome, ${username}!`;
     return new EmailEntity(email, subject, htmlContent);

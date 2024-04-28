@@ -61,7 +61,7 @@ export class EnvironmentVariables {
    * @returns The database port.
    */
   public getDatabasePort(): number {
-    return parseInt(process.env.DATABASE_PORT || '5432', 10);
+    return parseInt(process.env.DATABASE_PORT || '5433', 10);
   }
 
   /**
@@ -134,5 +134,4 @@ export class EnvironmentVariables {
   public getHostPort(): number {
     return parseInt(process.env.API_PORT || '3001', 10);
   }
-
 }

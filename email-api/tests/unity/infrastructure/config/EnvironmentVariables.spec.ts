@@ -1,5 +1,6 @@
-import { describe, beforeEach, it, expect } from "vitest";
-import { EnvironmentVariables } from "../../../../src/infrastructure/config/EnvironmentVariables";
+import { describe, beforeEach, it, expect } from 'vitest';
+
+import { EnvironmentVariables } from '../../../../src/infrastructure/config/EnvironmentVariables';
 
 describe('EnvironmentVariables', () => {
   let envVariables: EnvironmentVariables;

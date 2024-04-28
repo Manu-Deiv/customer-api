@@ -8,8 +8,8 @@ const logger = winston.createLogger({
   format: winston.format.json(), // Use JSON format for logs
   transports: [
     new winston.transports.Console(), // Log to the console
-    new winston.transports.File({ filename: 'combined.log' }) // Log to a file
-  ]
+    new winston.transports.File({ filename: 'combined.log' }), // Log to a file
+  ],
 });
 
 export { app, logger };

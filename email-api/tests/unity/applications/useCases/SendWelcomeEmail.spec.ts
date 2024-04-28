@@ -2,8 +2,8 @@ import { describe, beforeEach, it, vi, expect } from 'vitest';
 
 import { SendWelcomeEmailUseCase } from '../../../../src/application/usecases/sendWelcomeEmail/SendWelcomeEmail';
 import { SendWelcomeEmailUseCaseInterface } from '../../../../src/application/usecases/sendWelcomeEmail/SendWelcomeEmailInterface';
-import { EmailSenderInterface } from '../../../../src/domain/providers/EmailSender';
 import { EmailGeneratorInterface } from '../../../../src/domain/generators/emailGenerators/EmailGenerator';
+import { EmailSenderInterface } from '../../../../src/domain/providers/EmailSender';
 
 describe('SendWelcomeEmailUseCase', () => {
   let emailSenderMock: EmailSenderInterface;
@@ -35,10 +35,7 @@ describe('SendWelcomeEmailUseCase', () => {
 
     await sendWelcomeEmailUseCase.execute(username, email);
 
-    expect(emailGeneratorMock.execute).toHaveBeenCalledWith(
-      username,
-      email,
-    );
+    expect(emailGeneratorMock.execute).toHaveBeenCalledWith(username, email);
     expect(emailSenderMock.send).toHaveBeenCalledWith({
       to: email,
       subject: 'Welcome to Our Platform!',

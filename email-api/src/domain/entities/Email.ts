@@ -9,12 +9,12 @@ export class EmailEntity {
    * The recipient email address.
    */
   to: string;
-  
+
   /**
    * The subject line of the email.
    */
   subject: string;
-  
+
   /**
    * The body content of the email.
    */
