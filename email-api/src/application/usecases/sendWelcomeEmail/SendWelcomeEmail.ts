@@ -41,10 +41,7 @@ export class SendWelcomeEmailUseCase
    * @returns A Promise that resolves when the email is sent successfully, or rejects with an error.
    */
   async execute(username: string, email: string): Promise<void> {
-    const welcomeEmail = this.emailGenerator.execute(
-      username,
-      email,
-    );
+    const welcomeEmail = this.emailGenerator.execute(username, email);
     welcomeEmail.to = email;
     await this.emailSender.send(welcomeEmail);
   }

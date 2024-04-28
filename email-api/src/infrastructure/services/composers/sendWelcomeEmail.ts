@@ -1,6 +1,6 @@
-import { SendWelcomeEmailUseCase } from "../../../application/usecases/sendWelcomeEmail/SendWelcomeEmail";
-import { WelcomeEmailGenerator } from "../../generators/WelcomeEmailGenerator";
-import EmailSender from "../../providers/EmailSender";
+import { SendWelcomeEmailUseCase } from '../../../application/usecases/sendWelcomeEmail/SendWelcomeEmail';
+import { WelcomeEmailGenerator } from '../../generators/WelcomeEmailGenerator';
+import EmailSender from '../../providers/EmailSender';
 
 /**
  * Composes and sends a welcome email using the SendWelcomeEmailUseCase.

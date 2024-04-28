@@ -1,8 +1,8 @@
 import * as fs from 'fs';
 import * as Handlebars from 'handlebars';
 import * as path from 'path';
-
 import { describe, beforeEach, it, expect, vi, Mock } from 'vitest';
+
 import { EmailEntity } from '../../../../src/domain/entities/Email';
 import { EmailGeneratorInterface } from '../../../../src/domain/generators/emailGenerators/EmailGenerator';
 import { WelcomeEmailGenerator } from '../../../../src/infrastructure/generators/WelcomeEmailGenerator';
@@ -36,7 +36,6 @@ describe('WelcomeEmailGenerator', () => {
 
     const expectedSubject = `Welcome, ${username}!`;
     const expectedHtmlContent = 'Mock HTML content';
-
 
     expect(emailEntity).toBeInstanceOf(EmailEntity);
     expect(emailEntity.to).toBe(email);

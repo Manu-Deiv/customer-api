@@ -15,7 +15,9 @@ const start = async () => {
      * Starts the server and logs the server's address.
      */
     app.listen({ port: 3001 }, () => {
-      logger.info(`Server is running on http://${env.getHostIp()}:${env.getHostPort()}`);
+      logger.info(
+        `Server is running on http://${env.getHostIp()}:${env.getHostPort()}`,
+      );
     });
   } catch (error) {
     /**
