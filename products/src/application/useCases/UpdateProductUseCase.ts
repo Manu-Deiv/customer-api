@@ -1,9 +1,9 @@
-import { AbstractProductRepository } from "src/infra/repositories/AbstractCostumerRepository";
+import { AbstractProductRepository } from "src/infra/repositories/AbstractProductRepository";
 import { ResponseProductDto } from "../../application/dtos/ResponseProductDto";
 import { UpdateProductDto } from "../dtos/UpdateProductDto";
 
 /**
- * Use case class responsible for creating a new product.
+ * Use case class responsible for updating a new product.
  */
 export class UpdateProductUseCase {
     
@@ -18,17 +18,17 @@ export class UpdateProductUseCase {
     }
 
     /**
-     * Method to execute the creation of a new product.
+     * Method to execute the update of a new product.
      * @param {UpdateProductDto} data - The data required to update the product.
      * @returns {Promise<ResponseProductDto>} - A promise that resolves to the updated product.
      * @throws {Error} - If any required field is missing or if the code length exceeds 13 characters.
      */
-    async execute(data: UpdateProductDto, productId: number): Promise<ResponseProductDto> {
-        const product = await this.productRepository.getById(productId);
+    async execute(data: UpdateProductDto, productId: string): Promise<ResponseProductDto> {
+        const product = await this.productRepository.getByCode(productId);
         if (!product){
-            throw new Error("O produto não foi encontrado.")
+            throw new Error("The product doesn't exist.")
         }
-        const productUpdated = await this.productRepository.update(data, product);
+        const productUpdated = await this.productRepository.update(productId, data);
         return productUpdated;
     }
 }

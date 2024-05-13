@@ -1,6 +1,8 @@
-import { AbstractProductRepository } from "src/infra/repositories/AbstractCostumerRepository";
+import { AbstractProductRepository } from "src/infra/repositories/AbstractProductRepository";
 import { CreateProductDto } from "../../application/dtos/CreateProductDto";
 import { ResponseProductDto } from "../../application/dtos/ResponseProductDto";
+import { Product } from "src/domain/entities/Product";
+import { Barcode } from "src/domain/valueObjects/barcode";
 
 /**
  * Use case class responsible for creating a new product.
@@ -14,7 +16,7 @@ export class CreateProductUseCase {
      * @param {AbstractProductRepository} productRepository - The repository for product operations.
      */
     constructor(productRepository: AbstractProductRepository){
-        this.productRepository = productRepository;
+        this.productRepository = productRepository; 
     }
 
     /**
@@ -24,12 +26,17 @@ export class CreateProductUseCase {
      * @throws {Error} - If any required field is missing or if the code length exceeds 13 characters.
      */
     async execute(data: CreateProductDto): Promise<ResponseProductDto> {
-        if (!data.name || !data.description || !data.code || !data.value) {
-            throw new Error("All fields are required to register a product.");
-        } else if (data.code.length > 13) {
-            throw new Error("The product's barcode can only have up to 13 characters.");
+        const entity = new Product(
+            data.name,
+            data.code,
+            data.description,
+            data.value
+        )
+        const productAlreadyExist = await this.productRepository.getByCode(entity.code);
+        if (productAlreadyExist){
+            throw new Error("The product's code already exists")
         }
-        const product = await this.productRepository.create(data);
+        const product = await this.productRepository.create(data); 
         return product;
     }
 }
