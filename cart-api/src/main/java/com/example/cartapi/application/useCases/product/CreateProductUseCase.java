@@ -41,6 +41,7 @@ public class CreateProductUseCase implements CreateProductUseCaseInterface {
         }
 
         ProductEntity productEntity = ProductEntityFactory.createProductEntity(
+                null,
                 createProductRecordDTO.externalID(),
                 createProductRecordDTO.code(),
                 createProductRecordDTO.value()

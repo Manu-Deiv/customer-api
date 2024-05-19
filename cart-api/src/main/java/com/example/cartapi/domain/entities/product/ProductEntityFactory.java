@@ -1,6 +1,7 @@
 package com.example.cartapi.domain.entities.product;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 import java.util.UUID;
 
 public class ProductEntityFactory {
@@ -22,9 +23,10 @@ public class ProductEntityFactory {
      * @param value The value of the product.
      * @return A new ProductEntity instance.
      */
-    public static ProductEntity createProductEntity(UUID externalId, String code, BigDecimal value) {
+    public static ProductEntity createProductEntity(UUID id, UUID externalId, String code, BigDecimal value) {
         ProductEntity productEntity = new ProductEntity();
-        productEntity.setId(UUID.randomUUID());
+        productEntity.setId(Objects.requireNonNullElseGet(id, UUID::randomUUID));
+
         productEntity.setExternalId(externalId);
         productEntity.setCode(code);
         productEntity.setValue(value);

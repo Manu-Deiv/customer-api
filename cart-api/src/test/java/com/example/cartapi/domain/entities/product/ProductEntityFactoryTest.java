@@ -30,7 +30,7 @@ public class ProductEntityFactoryTest {
         BigDecimal value = BigDecimal.valueOf(10.99);
 
         // Act
-        ProductEntity productEntity = ProductEntityFactory.createProductEntity(externalId, code, value);
+        ProductEntity productEntity = ProductEntityFactory.createProductEntity(null, externalId, code, value);
 
         // Assert
         assertNotNull(productEntity);
